@@ -1,4 +1,4 @@
-const SUPABASE_URL = "https://rqtpqlknlrznxfbzeuja.supabase.co";
+ï»¿const SUPABASE_URL = "https://rqtpqlknlrznxfbzeuja.supabase.co";
 const SUPABASE_KEY = "sb_publishable_N6sa5ldpyoxtllYu4YkPgA__uvO8aEr";
 
 const supabaseClient = supabase.createClient(
@@ -79,7 +79,7 @@ form.addEventListener("submit", async (event) => {
 
 
   if (password !== passwordConfirm) {
-    alert("ƒpƒXƒ[ƒh‚ªˆê’v‚µ‚Ä‚¢‚Ü‚¹‚ñB");
+    alert("ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ãŒä¸€è‡´ã—ã¦ã„ã¾ã›ã‚“ã€‚");
     return;
   }
 
@@ -99,7 +99,7 @@ form.addEventListener("submit", async (event) => {
 
   if (error) {
     alert(
-      "“o˜^‚Å‚«‚Ü‚¹‚ñ‚Å‚µ‚½B\n" +
+      "ç™»éŒ²ã§ãã¾ã›ã‚“ã§ã—ãŸã€‚\n" +
       error.message
     );
 
@@ -108,7 +108,7 @@ form.addEventListener("submit", async (event) => {
 
 
   alert(
-    "“o˜^‚ðŽó‚¯•t‚¯‚Ü‚µ‚½B\nƒ[ƒ‹‚ð‚²Šm”F‚­‚¾‚³‚¢B"
+    "ç™»éŒ²ã‚’å—ã‘ä»˜ã‘ã¾ã—ãŸã€‚\nãƒ¡ãƒ¼ãƒ«ã‚’ã”ç¢ºèªãã ã•ã„ã€‚"
   );
 
 });
