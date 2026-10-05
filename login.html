@@ -9,7 +9,7 @@
     content="width=device-width, initial-scale=1.0"
   >
 
-  <title>新規登録 | AWS LENDING</title>
+  <title>ログイン | AWS LENDING</title>
 
   <link
     rel="stylesheet"
@@ -18,7 +18,7 @@
 
   <link
     rel="stylesheet"
-    href="css/signup.css"
+    href="css/login.css"
   >
 </head>
 
@@ -88,47 +88,37 @@
 </header>
 
 
+
 <main>
 
+  <section class="login-section">
 
-  <section class="signup-section">
+    <div class="login-container">
 
-    <div class="signup-container">
 
-      <div class="signup-heading">
+      <!-- TITLE -->
+
+      <div class="login-heading">
 
         <p>
-          CREATE ACCOUNT
+          LOGIN
         </p>
 
         <h1>
-          新規登録
+          ログイン
         </h1>
 
         <span>
-          AWS LENDINGをご利用いただくための<br class="sp-br">
-          アカウントを作成します。
+          AWS LENDINGのアカウントにログインします。
         </span>
 
       </div>
 
 
-      <form class="signup-form">
 
-        <div class="form-group">
+      <!-- FORM -->
 
-          <label for="name">
-            お名前
-          </label>
-
-          <input
-            type="text"
-            id="name"
-            name="name"
-            placeholder="山田 太郎"
-          >
-
-        </div>
+      <form class="login-form">
 
 
         <div class="form-group">
@@ -147,6 +137,7 @@
         </div>
 
 
+
         <div class="form-group">
 
           <label for="password">
@@ -163,67 +154,38 @@
         </div>
 
 
-        <div class="form-group">
 
-          <label for="password-confirm">
-            パスワード（確認）
-          </label>
+        <div class="forgot-password">
 
-          <input
-            type="password"
-            id="password-confirm"
-            name="password-confirm"
-            placeholder="もう一度入力してください"
-          >
+          <a href="#">
+            パスワードをお忘れの方
+          </a>
 
         </div>
 
-
-        <div class="signup-check">
-
-          <label>
-
-            <input type="checkbox">
-
-            <span>
-              ご利用約款に同意する
-            </span>
-
-          </label>
-
-
-          <label>
-
-            <input type="checkbox">
-
-            <span>
-              プライバシーポリシーに同意する
-            </span>
-
-          </label>
-
-        </div>
 
 
         <button
           type="submit"
-          class="signup-button"
+          class="login-button"
         >
-          お申し込み
+          ログイン
         </button>
 
 
-        <div class="login-link">
+
+        <div class="signup-link">
 
           <p>
-            すでにアカウントをお持ちの方
+            アカウントをお持ちでない方
           </p>
 
-          <a href="login.html">
-            ログインはこちら
+          <a href="signup.html">
+            新規登録はこちら
           </a>
 
         </div>
+
 
       </form>
 
@@ -233,8 +195,6 @@
 
 </main>
 
-
-<script src="js/script.js"></script>
 
 </body>
 
