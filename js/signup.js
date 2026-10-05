@@ -8,6 +8,59 @@ const supabaseClient = supabase.createClient(
 
 const form = document.querySelector(".signup-form");
 
+const nameInput = document.getElementById("name");
+const emailInput = document.getElementById("email");
+const passwordInput = document.getElementById("password");
+const passwordConfirmInput =
+  document.getElementById("password-confirm");
+
+const checkboxes =
+  document.querySelectorAll(
+    ".signup-check input[type='checkbox']"
+  );
+
+const submitButton =
+  document.querySelector(".signup-button");
+
+function checkForm() {
+
+  const allFilled =
+    nameInput.value.trim() !== "" &&
+    emailInput.value.trim() !== "" &&
+    passwordInput.value !== "" &&
+    passwordConfirmInput.value !== "";
+
+  const passwordMatch =
+    passwordInput.value ===
+    passwordConfirmInput.value;
+
+  const allChecked =
+    [...checkboxes].every(
+      checkbox => checkbox.checked
+    );
+
+  submitButton.disabled =
+    !(allFilled && passwordMatch && allChecked);
+}
+
+document
+  .querySelectorAll(".signup-form input")
+  .forEach(input => {
+
+    input.addEventListener(
+      "input",
+      checkForm
+    );
+
+    input.addEventListener(
+      "change",
+      checkForm
+    );
+
+  });
+
+checkForm();
+
 form.addEventListener("submit", async (event) => {
 
   event.preventDefault();
