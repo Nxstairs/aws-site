@@ -6,67 +6,40 @@ const supabaseClient = supabase.createClient(
   SUPABASE_KEY
 );
 
-const form = document.querySelector(".signup-form");
+const form = document.querySelector(".login-form");
 
-const nameInput = document.getElementById("name");
-const emailInput = document.getElementById("email");
-const passwordInput = document.getElementById("password");
-const passwordConfirmInput =
-  document.getElementById("password-confirm");
+const emailInput =
+  document.getElementById("email");
 
-const checkboxes =
-  document.querySelectorAll(
-    ".signup-check input[type='checkbox']"
-  );
+const passwordInput =
+  document.getElementById("password");
 
-const submitButton =
-  document.querySelector(".signup-button");
+const loginButton =
+  document.querySelector(".login-button");
 
 function checkForm() {
 
   const allFilled =
-    nameInput.value.trim() !== "" &&
     emailInput.value.trim() !== "" &&
-    passwordInput.value !== "" &&
-    passwordConfirmInput.value !== "";
+    passwordInput.value !== "";
 
-  const passwordMatch =
-    passwordInput.value ===
-    passwordConfirmInput.value;
-
-  const allChecked =
-    [...checkboxes].every(
-      checkbox => checkbox.checked
-    );
-
-  submitButton.disabled =
-    !(allFilled && passwordMatch && allChecked);
+  loginButton.disabled = !allFilled;
 }
 
-document
-  .querySelectorAll(".signup-form input")
-  .forEach(input => {
+emailInput.addEventListener(
+  "input",
+  checkForm
+);
 
-    input.addEventListener(
-      "input",
-      checkForm
-    );
-
-    input.addEventListener(
-      "change",
-      checkForm
-    );
-
-  });
+passwordInput.addEventListener(
+  "input",
+  checkForm
+);
 
 checkForm();
 
 form.addEventListener("submit", async (event) => {
-
   event.preventDefault();
-
-  const name =
-    document.getElementById("name").value;
 
   const email =
     document.getElementById("email").value;
@@ -74,41 +47,19 @@ form.addEventListener("submit", async (event) => {
   const password =
     document.getElementById("password").value;
 
-  const passwordConfirm =
-    document.getElementById("password-confirm").value;
-
-
-  if (password !== passwordConfirm) {
-    alert("パスワードが一致していません。");
-    return;
-  }
-
-
   const { data, error } =
-    await supabaseClient.auth.signUp({
+    await supabaseClient.auth.signInWithPassword({
       email: email,
-      password: password,
-
-      options: {
-        data: {
-          name: name
-        }
-      }
+      password: password
     });
-
 
   if (error) {
     alert(
-      "登録できませんでした。\n" +
+      "ログインできませんでした。\n" +
       error.message
     );
-
     return;
   }
 
-
-  alert(
-    "登録を受け付けました。\nメールをご確認ください。"
-  );
-
+  window.location.href = "mypage.html";
 });

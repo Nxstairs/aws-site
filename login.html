@@ -132,6 +132,7 @@
             id="email"
             name="email"
             placeholder="example@email.com"
+            required
           >
 
         </div>
@@ -149,6 +150,7 @@
             id="password"
             name="password"
             placeholder="パスワードを入力"
+            required
           >
 
         </div>
@@ -168,6 +170,7 @@
         <button
           type="submit"
           class="login-button"
+          disabled
         >
           ログイン
         </button>
@@ -195,6 +198,9 @@
 
 </main>
 
+<script src="js/script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/login.js"></script>
 
 </body>
 
