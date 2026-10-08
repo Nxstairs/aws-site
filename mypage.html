@@ -158,61 +158,262 @@
 
         </div>
 
+<div class="mypage-grid">
 
-        <div class="mypage-grid">
+  <div class="mypage-card">
 
-          <div class="mypage-card">
+    <p>
+      貸出中の資産
+    </p>
 
-            <p>
-              貸出中の資産
-            </p>
+    <strong id="totalAsset">
+      -
+    </strong>
 
-            <strong>
-              -
-            </strong>
-
-          </div>
-
-
-          <div class="mypage-card">
-
-            <p>
-              適用年利
-            </p>
-
-            <strong>
-              -
-            </strong>
-
-          </div>
+  </div>
 
 
-          <div class="mypage-card">
+  <div class="mypage-card">
 
-            <p>
-              運用状況
-            </p>
+    <p>
+      適用年利
+    </p>
 
-            <strong>
-              -
-            </strong>
+    <strong id="currentRate">
+      -
+    </strong>
 
-          </div>
-
-        </div>
+  </div>
 
 
-        <div class="mypage-content">
+  <div class="mypage-card">
 
-          <h2>
-            レンディング状況
-          </h2>
+    <p>
+      運用状況
+    </p>
 
-          <p>
-            現在表示できるレンディング情報はありません。
-          </p>
+    <strong id="lendingStatus">
+      未運用
+    </strong>
 
-        </div>
+  </div>
+
+</div>
+
+
+<!-- レンディング状況 -->
+
+<div class="mypage-content">
+
+  <div class="mypage-content-head">
+
+    <div>
+
+      <p class="mypage-small">
+        LENDING STATUS
+      </p>
+
+      <h2>
+        レンディング状況
+      </h2>
+
+    </div>
+
+  </div>
+
+
+  <div class="lending-empty">
+
+    <p>
+      現在運用中のレンディングはありません。
+    </p>
+
+  </div>
+
+</div>
+
+
+<!-- レンディングを始める -->
+
+<div class="mypage-lending">
+
+  <div class="mypage-content-head">
+
+    <div>
+
+      <p class="mypage-small">
+        START LENDING
+      </p>
+
+      <h2>
+        レンディングを始める
+      </h2>
+
+    </div>
+
+  </div>
+
+
+  <p class="lending-description">
+    ご希望のプランと貸し出す暗号資産を選択してください。
+  </p>
+
+
+  <!-- プラン -->
+
+  <div class="mypage-plan-grid">
+
+    <button
+      type="button"
+      class="mypage-plan-card"
+      data-plan="standard"
+    >
+
+      <span>
+        STANDARD
+      </span>
+
+      <h3>
+        スタンダードプラン
+      </h3>
+
+      <div class="mypage-rate">
+        <strong>10</strong>
+        <b>%</b>
+      </div>
+
+      <p>
+        年利
+      </p>
+
+    </button>
+
+
+    <button
+      type="button"
+      class="mypage-plan-card premium"
+      data-plan="premium"
+    >
+
+      <span>
+        PREMIUM
+      </span>
+
+      <h3>
+        プレミアムプラン
+      </h3>
+
+      <div class="mypage-rate">
+        <strong>14</strong>
+        <b>%</b>
+      </div>
+
+      <p>
+        年利
+      </p>
+
+    </button>
+
+  </div>
+
+
+  <!-- 暗号資産 -->
+
+  <div class="mypage-asset-section">
+
+    <h3>
+      貸し出す暗号資産
+    </h3>
+
+
+    <div class="mypage-asset-grid">
+
+      <button type="button" class="asset-select">
+        <img src="images/btc.png" alt="BTC">
+        <span>BTC</span>
+      </button>
+
+      <button type="button" class="asset-select">
+        <img src="images/eth.png" alt="ETH">
+        <span>ETH</span>
+      </button>
+
+      <button type="button" class="asset-select">
+        <img src="images/usdt.png" alt="USDT">
+        <span>USDT</span>
+      </button>
+
+      <button type="button" class="asset-select">
+        <img src="images/usdc.png" alt="USDC">
+        <span>USDC</span>
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <button
+    type="button"
+    class="lending-start-button"
+  >
+    レンディングを申し込む
+  </button>
+
+</div>
+
+
+<!-- アカウント情報 -->
+
+<div class="mypage-account">
+
+  <div class="mypage-content-head">
+
+    <div>
+
+      <p class="mypage-small">
+        ACCOUNT
+      </p>
+
+      <h2>
+        アカウント情報
+      </h2>
+
+    </div>
+
+  </div>
+
+
+  <div class="account-data">
+
+    <div>
+
+      <span>
+        お名前
+      </span>
+
+      <strong id="accountName">
+        -
+      </strong>
+
+    </div>
+
+
+    <div>
+
+      <span>
+        メールアドレス
+      </span>
+
+      <strong id="accountEmail">
+        -
+      </strong>
+
+    </div>
+
+  </div>
+
+</div>
 
       </div>
 
