@@ -248,6 +248,13 @@ lendingButton.addEventListener("click", async () => {
     "レンディングのお申し込みを受け付けました。"
   );
 
+  loadLendingData(user.id);
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+
 });
 
 
