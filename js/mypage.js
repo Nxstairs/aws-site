@@ -69,17 +69,109 @@ async function loadLendingData(userId) {
 
   // 上の3カード
 
-  document.getElementById("totalAsset").textContent =
-    lending.asset || "-";
+const activeLendings =
+  data.filter(lending =>
+    lending.status === "運用中"
+  );
 
-  document.getElementById("currentRate").textContent =
-    lending.rate
-      ? lending.rate + "%"
-      : "-";
+const activeLendingArea =
+  document.getElementById("activeLendingArea");
 
-  document.getElementById("lendingStatus").textContent =
-    lending.status || "-";
 
+if (activeLendings.length > 0) {
+
+  let activeHtml = "";
+
+  activeLendings.forEach(lending => {
+
+    activeHtml += `
+
+      <div class="mypage-grid">
+
+        <div class="mypage-card">
+
+          <p>
+            貸出中の資産
+          </p>
+
+          <strong>
+            ${lending.asset}
+          </strong>
+
+        </div>
+
+
+        <div class="mypage-card">
+
+          <p>
+            適用年利
+          </p>
+
+          <strong>
+            ${lending.rate}%
+          </strong>
+
+        </div>
+
+
+        <div class="mypage-card">
+
+          <p>
+            運用状況
+          </p>
+
+          <strong>
+            ${lending.status}
+          </strong>
+
+        </div>
+
+      </div>
+
+    `;
+
+  });
+
+  activeLendingArea.innerHTML =
+    activeHtml;
+
+} else {
+
+  activeLendingArea.innerHTML = `
+
+    <div class="mypage-grid">
+
+      <div class="mypage-card">
+
+        <p>貸出中の資産</p>
+
+        <strong>-</strong>
+
+      </div>
+
+
+      <div class="mypage-card">
+
+        <p>適用年利</p>
+
+        <strong>-</strong>
+
+      </div>
+
+
+      <div class="mypage-card">
+
+        <p>運用状況</p>
+
+        <strong>未運用</strong>
+
+      </div>
+
+    </div>
+
+  `;
+
+}
 
   // レンディング状況
 
