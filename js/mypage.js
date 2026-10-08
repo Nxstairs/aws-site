@@ -1,47 +1,98 @@
-﻿const SUPABASE_URL = "https://rqtpqlknlrznxfbzeuja.supabase.co";
-const SUPABASE_KEY = "sb_publishable_N6sa5ldpyoxtllYu4YkPgA__uvO8aEr";
+﻿const SUPABASE_URL =
+  "https://rqtpqlknlrznxfbzeuja.supabase.co";
 
-const supabaseClient = supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
-);
+const SUPABASE_KEY =
+  "sb_publishable_N6sa5ldpyoxtllYu4YkPgA__uvO8aEr";
+
+
+const supabaseClient =
+  supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
+
+
+// =========================
+// 履歴ページ
+// =========================
+
+let currentHistoryPage = 1;
+
+const historyPerPage = 1;
+
+
+// =========================
+// ログイン確認
+// =========================
 
 async function checkLogin() {
 
   const {
     data: { session }
-  } = await supabaseClient.auth.getSession();
+  } =
+    await supabaseClient.auth.getSession();
 
-  // ログインしていなければログインページへ
+
+  // ログインしていなければ
+  // ログインページへ
+
   if (!session) {
-    window.location.href = "login.html";
+
+    window.location.href =
+      "login.html";
+
     return;
   }
 
-  const user = session.user;
+
+  const user =
+    session.user;
+
+
+  // =========================
+  // アカウント情報
+  // =========================
 
   const accountName =
-    document.getElementById("accountName");
+    document.getElementById(
+      "accountName"
+    );
 
   const accountEmail =
-    document.getElementById("accountEmail");
+    document.getElementById(
+      "accountEmail"
+    );
+
 
   if (accountName) {
+
     accountName.textContent =
       user.user_metadata?.name || "-";
+
   }
 
+
   if (accountEmail) {
+
     accountEmail.textContent =
       user.email || "-";
+
   }
+
+
+  // レンディング情報取得
 
   loadLendingData(user.id);
 
 }
 
+
 checkLogin();
 
+
+// =========================
+// レンディング情報取得
+// =========================
 
 async function loadLendingData(userId) {
 
@@ -50,374 +101,834 @@ async function loadLendingData(userId) {
       .from("lendings")
       .select("*")
       .eq("user_id", userId)
-      .order("created_at", {
-        ascending: false
-      })
+      .order(
+        "created_at",
+        {
+          ascending: false
+        }
+      );
+
 
   if (error) {
+
     console.error(error);
+
     return;
   }
+
+
+  const activeLendingArea =
+    document.getElementById(
+      "activeLendingArea"
+    );
+
+
+  const lendingEmpty =
+    document.querySelector(
+      ".lending-empty"
+    );
+
+
+  // =========================
+  // データがない場合
+  // =========================
 
   if (!data || data.length === 0) {
+
+    if (activeLendingArea) {
+
+      activeLendingArea.innerHTML = `
+
+        <div class="mypage-grid">
+
+          <div class="mypage-card">
+
+            <p>
+              貸出中の資産
+            </p>
+
+            <strong>
+              -
+            </strong>
+
+          </div>
+
+
+          <div class="mypage-card">
+
+            <p>
+              適用年利
+            </p>
+
+            <strong>
+              -
+            </strong>
+
+          </div>
+
+
+          <div class="mypage-card">
+
+            <p>
+              運用状況
+            </p>
+
+            <strong>
+              未運用
+            </strong>
+
+          </div>
+
+        </div>
+
+      `;
+
+    }
+
+
+    if (lendingEmpty) {
+
+      lendingEmpty.innerHTML = `
+
+        <p>
+          現在表示できるレンディング情報はありません。
+        </p>
+
+      `;
+
+    }
+
+
     return;
   }
 
 
-  // 上の3カード
+  // =========================
+  // 運用中だけ上に表示
+  // =========================
 
-const activeLendings =
-  data.filter(lending =>
-    lending.status === "運用中"
-  );
-
-const activeLendingArea =
-  document.getElementById("activeLendingArea");
+  const activeLendings =
+    data.filter(
+      lending =>
+        lending.status === "運用中"
+    );
 
 
-if (activeLendings.length > 0) {
+  if (activeLendingArea) {
 
-  let activeHtml = "";
+    if (activeLendings.length > 0) {
 
-  activeLendings.forEach(lending => {
+      let activeHtml = "";
 
-    activeHtml += `
 
-      <div class="mypage-grid">
+      activeLendings.forEach(
+        lending => {
 
-        <div class="mypage-card">
+          activeHtml += `
 
-          <p>
-            貸出中の資産
-          </p>
+            <div class="mypage-grid">
 
-          <strong>
-            ${lending.asset}
-          </strong>
+              <div class="mypage-card">
+
+                <p>
+                  貸出中の資産
+                </p>
+
+                <strong>
+                  ${lending.asset}
+                </strong>
+
+              </div>
+
+
+              <div class="mypage-card">
+
+                <p>
+                  適用年利
+                </p>
+
+                <strong>
+                  ${lending.rate}%
+                </strong>
+
+              </div>
+
+
+              <div class="mypage-card">
+
+                <p>
+                  運用状況
+                </p>
+
+                <strong>
+                  ${lending.status}
+                </strong>
+
+              </div>
+
+            </div>
+
+          `;
+
+        }
+      );
+
+
+      activeLendingArea.innerHTML =
+        activeHtml;
+
+    } else {
+
+      activeLendingArea.innerHTML = `
+
+        <div class="mypage-grid">
+
+          <div class="mypage-card">
+
+            <p>
+              貸出中の資産
+            </p>
+
+            <strong>
+              -
+            </strong>
+
+          </div>
+
+
+          <div class="mypage-card">
+
+            <p>
+              適用年利
+            </p>
+
+            <strong>
+              -
+            </strong>
+
+          </div>
+
+
+          <div class="mypage-card">
+
+            <p>
+              運用状況
+            </p>
+
+            <strong>
+              未運用
+            </strong>
+
+          </div>
 
         </div>
 
+      `;
 
-        <div class="mypage-card">
+    }
 
-          <p>
-            適用年利
-          </p>
-
-          <strong>
-            ${lending.rate}%
-          </strong>
-
-        </div>
+  }
 
 
-        <div class="mypage-card">
+  // =========================
+  // 申込み履歴
+  // =========================
 
-          <p>
-            運用状況
-          </p>
-
-          <strong>
-            ${lending.status}
-          </strong>
-
-        </div>
-
-      </div>
-
-    `;
-
-  });
-
-  activeLendingArea.innerHTML =
-    activeHtml;
-
-} else {
-
-  activeLendingArea.innerHTML = `
-
-    <div class="mypage-grid">
-
-      <div class="mypage-card">
-
-        <p>貸出中の資産</p>
-
-        <strong>-</strong>
-
-      </div>
-
-
-      <div class="mypage-card">
-
-        <p>適用年利</p>
-
-        <strong>-</strong>
-
-      </div>
-
-
-      <div class="mypage-card">
-
-        <p>運用状況</p>
-
-        <strong>未運用</strong>
-
-      </div>
-
-    </div>
-
-  `;
+  renderLendingHistory(data);
 
 }
 
-// レンディング状況
 
-const lendingEmpty =
-  document.querySelector(".lending-empty");
+// =========================
+// 申込み履歴を1件ずつ表示
+// =========================
 
-if (lendingEmpty) {
+function renderLendingHistory(data) {
+
+  const lendingEmpty =
+    document.querySelector(
+      ".lending-empty"
+    );
+
+
+  if (!lendingEmpty) {
+    return;
+  }
+
+
+  const totalPages =
+    Math.ceil(
+      data.length /
+      historyPerPage
+    );
+
+
+  // ページ範囲チェック
+
+  if (
+    currentHistoryPage >
+    totalPages
+  ) {
+
+    currentHistoryPage =
+      totalPages;
+
+  }
+
+
+  if (
+    currentHistoryPage < 1
+  ) {
+
+    currentHistoryPage = 1;
+
+  }
+
+
+  const start =
+    (
+      currentHistoryPage - 1
+    ) * historyPerPage;
+
+
+  const pageData =
+    data.slice(
+      start,
+      start +
+      historyPerPage
+    );
+
 
   let historyHtml = "";
 
-  data.forEach((lending, index) => {
 
-    const date =
-      new Date(lending.created_at);
+  pageData.forEach(
+    (lending, index) => {
 
-    const formattedDate =
-      date.toLocaleDateString("ja-JP");
-
-    const planName =
-      lending.plan === "premium"
-        ? "PREMIUM"
-        : "STANDARD";
+      const date =
+        new Date(
+          lending.created_at
+        );
 
 
-    historyHtml += `
+      const formattedDate =
+        date.toLocaleDateString(
+          "ja-JP"
+        );
 
-      <div class="lending-history">
 
-        <div class="lending-history-head">
+      const planName =
+        lending.plan === "premium"
+          ? "PREMIUM"
+          : "STANDARD";
+
+
+      // 最新が
+      // 5件なら 5 / 5
+
+      const historyNumber =
+        data.length -
+        (
+          start +
+          index
+        );
+
+
+      historyHtml += `
+
+        <div class="lending-history">
+
+          <div class="lending-history-head">
+
+            <span>
+              ${historyNumber} / ${data.length}
+            </span>
+
+            <strong>
+              ${lending.status}
+            </strong>
+
+          </div>
+
+
+          <div class="lending-data-row">
+
+            <span>
+              対象資産
+            </span>
+
+            <strong>
+              ${lending.asset}
+            </strong>
+
+          </div>
+
+
+          <div class="lending-data-row">
+
+            <span>
+              貸出プラン
+            </span>
+
+            <strong>
+              ${planName}
+            </strong>
+
+          </div>
+
+
+          <div class="lending-data-row">
+
+            <span>
+              年利
+            </span>
+
+            <strong>
+              ${lending.rate}%
+            </strong>
+
+          </div>
+
+
+          <div class="lending-data-row">
+
+            <span>
+              申込日時
+            </span>
+
+            <strong>
+              ${formattedDate}
+            </strong>
+
+          </div>
+
+
+          <div class="lending-data-row">
+
+            <span>
+              ステータス
+            </span>
+
+            <strong>
+              ${lending.status}
+            </strong>
+
+          </div>
+
+        </div>
+
+
+        <div class="history-pagination">
+
+          <button
+            type="button"
+            id="historyPrev"
+            ${
+              currentHistoryPage === 1
+                ? "disabled"
+                : ""
+            }
+          >
+            ‹
+          </button>
+
 
           <span>
-            申込み ${data.length - index}
+            ${historyNumber} / ${data.length}
           </span>
 
-          <strong>
-            ${lending.status}
-          </strong>
+
+          <button
+            type="button"
+            id="historyNext"
+            ${
+              currentHistoryPage ===
+              totalPages
+                ? "disabled"
+                : ""
+            }
+          >
+            ›
+          </button>
 
         </div>
 
+      `;
 
-        <div class="lending-data-row">
-
-          <span>対象資産</span>
-
-          <strong>
-            ${lending.asset}
-          </strong>
-
-        </div>
-
-
-        <div class="lending-data-row">
-
-          <span>貸出プラン</span>
-
-          <strong>
-            ${planName}
-          </strong>
-
-        </div>
-
-
-        <div class="lending-data-row">
-
-          <span>年利</span>
-
-          <strong>
-            ${lending.rate}%
-          </strong>
-
-        </div>
-
-
-        <div class="lending-data-row">
-
-          <span>申込日時</span>
-
-          <strong>
-            ${formattedDate}
-          </strong>
-
-        </div>
-
-
-        <div class="lending-data-row">
-
-          <span>ステータス</span>
-
-          <strong>
-            ${lending.status}
-          </strong>
-
-        </div>
-
-      </div>
-
-    `;
-
-  });
+    }
+  );
 
 
   lendingEmpty.innerHTML =
     historyHtml;
 
-}
+
+  const prevButton =
+    document.getElementById(
+      "historyPrev"
+    );
+
+
+  const nextButton =
+    document.getElementById(
+      "historyNext"
+    );
+
+
+  // 前の履歴
+
+  prevButton?.addEventListener(
+    "click",
+    () => {
+
+      currentHistoryPage--;
+
+      renderLendingHistory(
+        data
+      );
+
+    }
+  );
+
+
+  // 次の履歴
+
+  nextButton?.addEventListener(
+    "click",
+    () => {
+
+      currentHistoryPage++;
+
+      renderLendingHistory(
+        data
+      );
+
+    }
+  );
 
 }
 
+
+// =========================
+// プラン・資産選択
+// =========================
 
 const planCards =
-  document.querySelectorAll(".mypage-plan-card");
+  document.querySelectorAll(
+    ".mypage-plan-card"
+  );
+
 
 const assetCards =
-  document.querySelectorAll(".asset-select");
+  document.querySelectorAll(
+    ".asset-select"
+  );
+
 
 const lendingButton =
-  document.querySelector(".lending-start-button");
+  document.querySelector(
+    ".lending-start-button"
+  );
+
 
 let selectedPlan = null;
+
 let selectedAsset = null;
 
 
+// =========================
+// 申込みボタン制御
+// =========================
+
 function updateLendingButton() {
 
+  if (!lendingButton) {
+    return;
+  }
+
+
   lendingButton.disabled =
-    !(selectedPlan && selectedAsset);
+    !(
+      selectedPlan &&
+      selectedAsset
+    );
 
 }
 
 
+// =========================
 // プラン選択
+// =========================
 
-planCards.forEach(card => {
+planCards.forEach(
+  card => {
 
-  card.addEventListener("click", () => {
+    card.addEventListener(
+      "click",
+      () => {
 
-    planCards.forEach(item => {
-      item.classList.remove("selected");
-    });
+        planCards.forEach(
+          item => {
 
-    card.classList.add("selected");
+            item.classList.remove(
+              "selected"
+            );
 
-    selectedPlan =
-      card.dataset.plan;
-
-    updateLendingButton();
-
-  });
-
-});
+          }
+        );
 
 
+        card.classList.add(
+          "selected"
+        );
+
+
+        selectedPlan =
+          card.dataset.plan;
+
+
+        updateLendingButton();
+
+      }
+    );
+
+  }
+);
+
+
+// =========================
 // 暗号資産選択
+// =========================
 
-assetCards.forEach(card => {
+assetCards.forEach(
+  card => {
 
-  card.addEventListener("click", () => {
+    card.addEventListener(
+      "click",
+      () => {
 
-    assetCards.forEach(item => {
-      item.classList.remove("selected");
-    });
+        assetCards.forEach(
+          item => {
 
-    card.classList.add("selected");
+            item.classList.remove(
+              "selected"
+            );
 
-    selectedAsset =
-      card.querySelector("span").textContent;
+          }
+        );
 
-    updateLendingButton();
 
-  });
+        card.classList.add(
+          "selected"
+        );
 
-});
+
+        selectedAsset =
+          card
+            .querySelector("span")
+            .textContent
+            .trim();
+
+
+        updateLendingButton();
+
+      }
+    );
+
+  }
+);
 
 
 updateLendingButton();
 
 
-lendingButton.addEventListener("click", async () => {
+// =========================
+// レンディング申込み
+// =========================
 
-  if (!selectedPlan || !selectedAsset) {
-    return;
-  }
+if (lendingButton) {
 
-  const {
-    data: { session }
-  } = await supabaseClient.auth.getSession();
+  lendingButton.addEventListener(
+    "click",
+    async () => {
 
-  if (!session) {
-    window.location.href = "login.html";
-    return;
-  }
+      if (
+        !selectedPlan ||
+        !selectedAsset
+      ) {
 
-  const user = session.user;
+        return;
 
-  let rate = null;
+      }
 
-  if (selectedPlan === "standard") {
-    rate = 10;
-  }
 
-  if (selectedPlan === "premium") {
-    rate = 14;
-  }
+      const {
+        data: { session }
+      } =
+        await supabaseClient
+          .auth
+          .getSession();
 
-  const { error } =
-    await supabaseClient
-      .from("lendings")
-      .insert({
-        user_id: user.id,
-        plan: selectedPlan,
-        rate: rate,
-        asset: selectedAsset,
-        status: "申込受付中"
+
+      if (!session) {
+
+        window.location.href =
+          "login.html";
+
+        return;
+
+      }
+
+
+      const user =
+        session.user;
+
+
+      let rate = null;
+
+
+      if (
+        selectedPlan ===
+        "standard"
+      ) {
+
+        rate = 10;
+
+      }
+
+
+      if (
+        selectedPlan ===
+        "premium"
+      ) {
+
+        rate = 14;
+
+      }
+
+
+      const { error } =
+        await supabaseClient
+          .from("lendings")
+          .insert({
+
+            user_id:
+              user.id,
+
+            plan:
+              selectedPlan,
+
+            rate:
+              rate,
+
+            asset:
+              selectedAsset,
+
+            status:
+              "申込受付中"
+
+          });
+
+
+      if (error) {
+
+        alert(
+          "お申し込みできませんでした。\n" +
+          error.message
+        );
+
+        return;
+
+      }
+
+
+      alert(
+        "レンディングのお申し込みを受け付けました。"
+      );
+
+
+      // 最新履歴へ戻す
+
+      currentHistoryPage = 1;
+
+
+      // 情報更新
+
+      await loadLendingData(
+        user.id
+      );
+
+
+      // 選択状態解除
+
+      selectedPlan = null;
+
+      selectedAsset = null;
+
+
+      planCards.forEach(
+        card => {
+
+          card.classList.remove(
+            "selected"
+          );
+
+        }
+      );
+
+
+      assetCards.forEach(
+        card => {
+
+          card.classList.remove(
+            "selected"
+          );
+
+        }
+      );
+
+
+      updateLendingButton();
+
+
+      // ページトップへ
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
       });
 
-  if (error) {
-    alert(
-      "お申し込みできませんでした。\n" +
-      error.message
-    );
-    return;
-  }
-
-  alert(
-    "レンディングのお申し込みを受け付けました。"
+    }
   );
 
-  loadLendingData(user.id);
-
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
-  });
-
-});
+}
 
 
+// =========================
 // ログアウト
+// =========================
 
 const logoutButton =
-  document.querySelector(".logout-button");
+  document.querySelector(
+    ".logout-button"
+  );
 
-logoutButton.addEventListener(
-  "click",
-  async () => {
 
-    await supabaseClient.auth.signOut();
+if (logoutButton) {
 
-    window.location.href = "login.html";
-  }
-);
+  logoutButton.addEventListener(
+    "click",
+    async () => {
+
+      await supabaseClient
+        .auth
+        .signOut();
+
+
+      window.location.href =
+        "login.html";
+
+    }
+  );
+
+}
