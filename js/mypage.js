@@ -36,9 +36,98 @@ async function checkLogin() {
       user.email || "-";
   }
 
+  loadLendingData(user.id);
+
 }
 
 checkLogin();
+
+
+async function loadLendingData(userId) {
+
+  const { data, error } =
+    await supabaseClient
+      .from("lendings")
+      .select("*")
+      .eq("user_id", userId)
+      .order("created_at", {
+        ascending: false
+      })
+      .limit(1);
+
+  if (error) {
+    console.error(error);
+    return;
+  }
+
+  if (!data || data.length === 0) {
+    return;
+  }
+
+  const lending = data[0];
+
+
+  // 上の3カード
+
+  document.getElementById("totalAsset").textContent =
+    lending.asset || "-";
+
+  document.getElementById("currentRate").textContent =
+    lending.rate
+      ? lending.rate + "%"
+      : "-";
+
+  document.getElementById("lendingStatus").textContent =
+    lending.status || "-";
+
+
+  // レンディング状況
+
+  const lendingEmpty =
+    document.querySelector(".lending-empty");
+
+  if (lendingEmpty) {
+
+    const date =
+      new Date(lending.created_at);
+
+    const formattedDate =
+      date.toLocaleDateString("ja-JP");
+
+    const planName =
+      lending.plan === "premium"
+        ? "PREMIUM"
+        : "STANDARD";
+
+    lendingEmpty.innerHTML = `
+      <div class="lending-data-row">
+        <span>対象資産</span>
+        <strong>${lending.asset}</strong>
+      </div>
+
+      <div class="lending-data-row">
+        <span>貸出プラン</span>
+        <strong>${planName}</strong>
+      </div>
+
+      <div class="lending-data-row">
+        <span>年利</span>
+        <strong>${lending.rate}%</strong>
+      </div>
+
+      <div class="lending-data-row">
+        <span>申込日時</span>
+        <strong>${formattedDate}</strong>
+      </div>
+
+      <div class="lending-data-row">
+        <span>ステータス</span>
+        <strong>${lending.status}</strong>
+      </div>
+    `;
+  }
+
+}
 
 
 const planCards =
