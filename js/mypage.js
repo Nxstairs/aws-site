@@ -53,7 +53,6 @@ async function loadLendingData(userId) {
       .order("created_at", {
         ascending: false
       })
-      .limit(1);
 
   if (error) {
     console.error(error);
