@@ -109,6 +109,59 @@ assetCards.forEach(card => {
 updateLendingButton();
 
 
+lendingButton.addEventListener("click", async () => {
+
+  if (!selectedPlan || !selectedAsset) {
+    return;
+  }
+
+  const {
+    data: { session }
+  } = await supabaseClient.auth.getSession();
+
+  if (!session) {
+    window.location.href = "login.html";
+    return;
+  }
+
+  const user = session.user;
+
+  let rate = null;
+
+  if (selectedPlan === "standard") {
+    rate = 10;
+  }
+
+  if (selectedPlan === "premium") {
+    rate = 14;
+  }
+
+  const { error } =
+    await supabaseClient
+      .from("lendings")
+      .insert({
+        user_id: user.id,
+        plan: selectedPlan,
+        rate: rate,
+        asset: selectedAsset,
+        status: "申込受付中"
+      });
+
+  if (error) {
+    alert(
+      "お申し込みできませんでした。\n" +
+      error.message
+    );
+    return;
+  }
+
+  alert(
+    "レンディングのお申し込みを受け付けました。"
+  );
+
+});
+
+
 // ログアウト
 
 const logoutButton =
