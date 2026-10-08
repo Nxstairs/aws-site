@@ -41,6 +41,74 @@ async function checkLogin() {
 checkLogin();
 
 
+const planCards =
+  document.querySelectorAll(".mypage-plan-card");
+
+const assetCards =
+  document.querySelectorAll(".asset-select");
+
+const lendingButton =
+  document.querySelector(".lending-start-button");
+
+let selectedPlan = null;
+let selectedAsset = null;
+
+
+function updateLendingButton() {
+
+  lendingButton.disabled =
+    !(selectedPlan && selectedAsset);
+
+}
+
+
+// プラン選択
+
+planCards.forEach(card => {
+
+  card.addEventListener("click", () => {
+
+    planCards.forEach(item => {
+      item.classList.remove("selected");
+    });
+
+    card.classList.add("selected");
+
+    selectedPlan =
+      card.dataset.plan;
+
+    updateLendingButton();
+
+  });
+
+});
+
+
+// 暗号資産選択
+
+assetCards.forEach(card => {
+
+  card.addEventListener("click", () => {
+
+    assetCards.forEach(item => {
+      item.classList.remove("selected");
+    });
+
+    card.classList.add("selected");
+
+    selectedAsset =
+      card.querySelector("span").textContent;
+
+    updateLendingButton();
+
+  });
+
+});
+
+
+updateLendingButton();
+
+
 // ログアウト
 
 const logoutButton =
