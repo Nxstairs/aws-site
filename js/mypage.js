@@ -17,6 +17,25 @@ async function checkLogin() {
     window.location.href = "login.html";
     return;
   }
+
+  const user = session.user;
+
+  const accountName =
+    document.getElementById("accountName");
+
+  const accountEmail =
+    document.getElementById("accountEmail");
+
+  if (accountName) {
+    accountName.textContent =
+      user.user_metadata?.name || "-";
+  }
+
+  if (accountEmail) {
+    accountEmail.textContent =
+      user.email || "-";
+  }
+
 }
 
 checkLogin();
