@@ -63,8 +63,6 @@ async function loadLendingData(userId) {
     return;
   }
 
-  const lending = data[0];
-
 
   // 上の3カード
 
@@ -172,12 +170,16 @@ if (activeLendings.length > 0) {
 
 }
 
-  // レンディング状況
+// レンディング状況
 
-  const lendingEmpty =
-    document.querySelector(".lending-empty");
+const lendingEmpty =
+  document.querySelector(".lending-empty");
 
-  if (lendingEmpty) {
+if (lendingEmpty) {
+
+  let historyHtml = "";
+
+  data.forEach((lending, index) => {
 
     const date =
       new Date(lending.created_at);
@@ -190,33 +192,89 @@ if (activeLendings.length > 0) {
         ? "PREMIUM"
         : "STANDARD";
 
-    lendingEmpty.innerHTML = `
-      <div class="lending-data-row">
-        <span>対象資産</span>
-        <strong>${lending.asset}</strong>
+
+    historyHtml += `
+
+      <div class="lending-history">
+
+        <div class="lending-history-head">
+
+          <span>
+            申込み ${data.length - index}
+          </span>
+
+          <strong>
+            ${lending.status}
+          </strong>
+
+        </div>
+
+
+        <div class="lending-data-row">
+
+          <span>対象資産</span>
+
+          <strong>
+            ${lending.asset}
+          </strong>
+
+        </div>
+
+
+        <div class="lending-data-row">
+
+          <span>貸出プラン</span>
+
+          <strong>
+            ${planName}
+          </strong>
+
+        </div>
+
+
+        <div class="lending-data-row">
+
+          <span>年利</span>
+
+          <strong>
+            ${lending.rate}%
+          </strong>
+
+        </div>
+
+
+        <div class="lending-data-row">
+
+          <span>申込日時</span>
+
+          <strong>
+            ${formattedDate}
+          </strong>
+
+        </div>
+
+
+        <div class="lending-data-row">
+
+          <span>ステータス</span>
+
+          <strong>
+            ${lending.status}
+          </strong>
+
+        </div>
+
       </div>
 
-      <div class="lending-data-row">
-        <span>貸出プラン</span>
-        <strong>${planName}</strong>
-      </div>
-
-      <div class="lending-data-row">
-        <span>年利</span>
-        <strong>${lending.rate}%</strong>
-      </div>
-
-      <div class="lending-data-row">
-        <span>申込日時</span>
-        <strong>${formattedDate}</strong>
-      </div>
-
-      <div class="lending-data-row">
-        <span>ステータス</span>
-        <strong>${lending.status}</strong>
-      </div>
     `;
-  }
+
+  });
+
+
+  lendingEmpty.innerHTML =
+    historyHtml;
+
+}
 
 }
 
