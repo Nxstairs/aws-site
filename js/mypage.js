@@ -635,6 +635,27 @@ let selectedPlan = null;
 
 let selectedAsset = null;
 
+const lendingAmount =
+  document.getElementById(
+    "lendingAmount"
+  );
+
+const amountUnit =
+  document.getElementById(
+    "amountUnit"
+  );
+
+const amountNote =
+  document.getElementById(
+    "amountNote"
+  );
+
+const amountError =
+  document.getElementById(
+    "amountError"
+  );
+
+let amountValid = false;
 
 // =========================
 // 申込みボタン制御
@@ -646,11 +667,11 @@ function updateLendingButton() {
     return;
   }
 
-
   lendingButton.disabled =
     !(
       selectedPlan &&
-      selectedAsset
+      selectedAsset &&
+      amountValid
     );
 
 }
@@ -730,6 +751,106 @@ assetCards.forEach(
             .trim();
 
 
+        lendingAmount.disabled =
+          false;
+
+        lendingAmount.value =
+          "";
+
+        amountUnit.textContent =
+          selectedAsset;
+
+        amountError.textContent =
+          "";
+
+        amountValid =
+          false;
+
+
+        // BTC
+
+        if (
+          selectedAsset === "BTC"
+        ) {
+
+          lendingAmount.min =
+            "0.0008";
+
+          lendingAmount.step =
+            "0.0001";
+
+          lendingAmount.placeholder =
+            "0.0008";
+
+          amountNote.textContent =
+            "最低貸出数量：0.0008 BTC（小数4桁まで）";
+
+        }
+
+
+        // ETH
+
+        if (
+          selectedAsset === "ETH"
+        ) {
+
+          lendingAmount.min =
+            "0.03";
+
+          lendingAmount.step =
+            "0.01";
+
+          lendingAmount.placeholder =
+            "0.03";
+
+          amountNote.textContent =
+            "最低貸出数量：0.03 ETH（小数2桁まで）";
+
+        }
+
+
+        // USDT
+
+        if (
+          selectedAsset === "USDT"
+        ) {
+
+          lendingAmount.min =
+            "65";
+
+          lendingAmount.step =
+            "1";
+
+          lendingAmount.placeholder =
+            "65";
+
+          amountNote.textContent =
+            "最低貸出数量：65 USDT（整数のみ）";
+
+        }
+
+
+        // USDC
+
+        if (
+          selectedAsset === "USDC"
+        ) {
+
+          lendingAmount.min =
+            "65";
+
+          lendingAmount.step =
+            "1";
+
+          lendingAmount.placeholder =
+            "65";
+
+          amountNote.textContent =
+            "最低貸出数量：65 USDC（整数のみ）";
+
+        }
+
+
         updateLendingButton();
 
       }
@@ -739,7 +860,151 @@ assetCards.forEach(
 );
 
 
-updateLendingButton();
+lendingAmount.addEventListener(
+  "input",
+  () => {
+
+    const value =
+      lendingAmount.value;
+
+    const number =
+      Number(value);
+
+
+    amountValid =
+      false;
+
+    amountError.textContent =
+      "";
+
+
+    if (!selectedAsset) {
+
+      updateLendingButton();
+
+      return;
+
+    }
+
+
+    // BTC
+
+    if (
+      selectedAsset === "BTC"
+    ) {
+
+      const decimalLength =
+        value.includes(".")
+          ? value.split(".")[1].length
+          : 0;
+
+
+      if (
+        number < 0.0008
+      ) {
+
+        amountError.textContent =
+          "0.0008 BTC以上を入力してください。";
+
+      } else if (
+        decimalLength > 4
+      ) {
+
+        amountError.textContent =
+          "BTCは小数4桁まで入力できます。";
+
+      } else {
+
+        amountValid =
+          true;
+
+      }
+
+    }
+
+
+    // ETH
+
+    if (
+      selectedAsset === "ETH"
+    ) {
+
+      const decimalLength =
+        value.includes(".")
+          ? value.split(".")[1].length
+          : 0;
+
+
+      if (
+        number < 0.03
+      ) {
+
+        amountError.textContent =
+          "0.03 ETH以上を入力してください。";
+
+      } else if (
+        decimalLength > 2
+      ) {
+
+        amountError.textContent =
+          "ETHは小数2桁まで入力できます。";
+
+      } else {
+
+        amountValid =
+          true;
+
+      }
+
+    }
+
+
+    // USDT / USDC
+
+    if (
+      selectedAsset === "USDT" ||
+      selectedAsset === "USDC"
+    ) {
+
+      if (
+        number < 65
+      ) {
+
+        amountError.textContent =
+          `65 ${selectedAsset}以上を入力してください。`;
+
+      } else if (
+        !Number.isInteger(number)
+      ) {
+
+        amountError.textContent =
+          `${selectedAsset}は整数で入力してください。`;
+
+      } else {
+
+        amountValid =
+          true;
+
+      }
+
+    }
+
+
+    if (
+      value === "" ||
+      Number.isNaN(number)
+    ) {
+
+      amountValid =
+        false;
+
+    }
+
+
+    updateLendingButton();
+
+  }
+);
 
 
 // =========================
