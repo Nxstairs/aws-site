@@ -1100,10 +1100,10 @@ if (lendingButton) {
               rate,
 
             amount:
-              rate,
+              Number(lendingAmount.value),
 
             asset:
-              Number(lendingAmount.value),
+              selectedAsset,
 
             status:
               "申込受付中"
