@@ -235,7 +235,7 @@ async function loadLendingData(userId) {
                 </p>
 
                 <strong>
-                  ${lending.asset}
+                  ${lending.amount} ${lending.asset}
                 </strong>
 
               </div>
@@ -485,6 +485,19 @@ function renderLendingHistory(data) {
 
             <strong>
               ${lending.rate}%
+            </strong>
+
+          </div>
+
+
+          <div class="lending-data-row">
+
+            <span>
+              貸出数量
+            </span>
+
+            <strong>
+              ${lending.amount} ${lending.asset}
             </strong>
 
           </div>
@@ -1086,8 +1099,11 @@ if (lendingButton) {
             rate:
               rate,
 
+            amount:
+              rate,
+
             asset:
-              selectedAsset,
+              Number(lendingAmount.value),
 
             status:
               "申込受付中"
