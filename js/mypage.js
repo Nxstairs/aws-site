@@ -240,7 +240,7 @@ const canReturn =
 
           <div class="active-lending-card">
 
-            <div class="active-lending-date">
+            <div class="active-lending-data">
 
               <div class="active-lending-item">
 
