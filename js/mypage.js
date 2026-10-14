@@ -224,6 +224,18 @@ async function loadLendingData(userId) {
       activeLendings.forEach(
         lending => {
 
+const now =
+  new Date();
+
+const unlockDate =
+  lending.unlock_date
+    ? new Date(lending.unlock_date)
+    : null;
+
+const canReturn =
+  unlockDate &&
+  now >= unlockDate;
+
           activeHtml += `
 
             <div class="mypage-grid">
@@ -263,6 +275,28 @@ async function loadLendingData(userId) {
                 <strong>
                   ${lending.status}
                 </strong>
+
+                <p class="unlock-date">
+                  返還可能日：
+                  ${
+                    unlockDate
+                      ? unlockDate.toLocaleDateString("ja-JP")
+                      : "未設定"
+                  }
+                </p>
+
+                <button
+                  type="button"
+                  class="return-request-button"
+                  data-id="${lending.id}"
+                  ${canReturn ? "" : "disabled"}
+                >
+                  ${
+                    canReturn
+                      ? "返還申請"
+                      : "ロック期間中"
+                  }
+                 </button>
 
               </div>
 
