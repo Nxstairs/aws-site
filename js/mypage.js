@@ -283,7 +283,7 @@ const canReturn =
 
               <div class="active-lending-item active-lending-action">
 
-                <p class="unlock-date">
+                <p>
                   返還申請：
                   ${
                     unlockDate
