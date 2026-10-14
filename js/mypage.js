@@ -1229,6 +1229,67 @@ if (lendingButton) {
 
 
 // =========================
+// 返還申請
+// =========================
+
+
+document.addEventListener("click", async (event) => {
+
+  if (
+    !event.target.classList.contains(
+      "return-request-button"
+    )
+  ) {
+    return;
+  }
+
+  const lendingId =
+    event.target.dataset.id;
+
+  const confirmed =
+    confirm(
+      "返還申請を行いますか？"
+    );
+
+  if (!confirmed) {
+    return;
+  }
+
+  const { error } =
+    await supabaseClient
+      .from("lendings")
+      .update({
+        status: "返還申請中"
+      })
+      .eq("id", lendingId);
+
+  if (error) {
+    alert(
+      "返還申請に失敗しました。\n" +
+      error.message
+    );
+    return;
+  }
+
+  alert(
+    "返還申請を受け付けました。"
+  );
+
+  const {
+    data: { session }
+  } =
+    await supabaseClient.auth.getSession();
+
+  if (session) {
+    loadLendingData(
+      session.user.id
+    );
+  }
+
+});
+
+
+// =========================
 // ログアウト
 // =========================
 
