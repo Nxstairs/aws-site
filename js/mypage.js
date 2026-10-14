@@ -238,9 +238,11 @@ const canReturn =
 
           activeHtml += `
 
-            <div class="mypage-grid">
+          <div class="active-lending-card">
 
-              <div class="mypage-card">
+            <div class="active-lending-date">
+
+              <div class="active-lending-item">
 
                 <p>
                   貸出中の資産
@@ -253,7 +255,7 @@ const canReturn =
               </div>
 
 
-              <div class="mypage-card">
+              <div class="active-lending-item">
 
                 <p>
                   適用年利
@@ -266,7 +268,7 @@ const canReturn =
               </div>
 
 
-              <div class="mypage-card">
+              <div class="active-lending-item">
 
                 <p>
                   運用状況
@@ -276,8 +278,13 @@ const canReturn =
                   ${lending.status}
                 </strong>
 
+              </div>
+
+
+              <div class="active-lending-item active-lending-action">
+
                 <p class="unlock-date">
-                  返還可能日：
+                  返還申請：
                   ${
                     unlockDate
                       ? unlockDate.toLocaleDateString("ja-JP")
@@ -301,6 +308,8 @@ const canReturn =
               </div>
 
             </div>
+          
+          </div>
 
           `;
 
