@@ -1,0 +1,325 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>本人確認 | AWS LENDING</title>
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/kyc.css">
+</head>
+
+<body>
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<header class="header">
+
+  <div class="header-inner">
+
+    <a href="index.html" class="logo">
+      <img src="images/logo.png" alt="AWS LENDING">
+    </a>
+
+
+    <nav class="nav" id="nav">
+
+      <a href="services.html">
+        はじめての方へ
+      </a>
+
+      <a href="user-guide.html">
+        ユーザーガイド
+      </a>
+
+      <a href="overview.html">
+        企業情報
+      </a>
+
+      <a href="policies.html">
+        規約・ポリシー
+      </a>
+
+    </nav>
+
+
+    <div class="header-actions">
+
+      <button
+        type="button"
+        class="logout-button"
+      >
+        ログアウト
+      </button>
+
+      <a href="signup.html" class="start-btn">
+        今すぐ始める
+      </a>
+
+    </div>
+
+
+    <button
+      class="menu-toggle"
+      id="menuToggle"
+      aria-label="メニューを開く"
+    >
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+  </div>
+
+</header>
+
+
+<!-- =========================
+     KYC
+========================= -->
+
+<main>
+
+  <section class="kyc-section">
+
+    <div class="kyc-container">
+
+      <div class="kyc-heading">
+
+        <p>
+          IDENTITY VERIFICATION
+        </p>
+
+        <h1>
+          本人確認
+        </h1>
+
+        <span>
+          AWS LENDINGをご利用いただくため、本人確認情報をご入力ください。
+        </span>
+
+      </div>
+
+
+      <form
+        class="kyc-form"
+        id="kycForm"
+      >
+
+        <!-- 氏名 -->
+
+        <div class="kyc-form-group">
+
+          <label for="fullName">
+            氏名
+          </label>
+
+          <input
+            type="text"
+            id="fullName"
+            name="fullName"
+            placeholder="山田 太郎"
+            required
+          >
+
+        </div>
+
+
+        <!-- 生年月日 -->
+
+        <div class="kyc-form-group">
+
+          <label for="birthDate">
+            生年月日
+          </label>
+
+          <input
+            type="date"
+            id="birthDate"
+            name="birthDate"
+            required
+          >
+
+        </div>
+
+
+        <!-- 郵便番号 -->
+
+        <div class="kyc-form-group">
+
+          <label for="postalCode">
+            郵便番号
+          </label>
+
+          <input
+            type="text"
+            id="postalCode"
+            name="postalCode"
+            placeholder="123-4567"
+            required
+          >
+
+        </div>
+
+
+        <!-- 住所 -->
+
+        <div class="kyc-form-group">
+
+          <label for="address">
+            住所
+          </label>
+
+          <input
+            type="text"
+            id="address"
+            name="address"
+            placeholder="東京都〇〇区〇〇1-2-3"
+            required
+          >
+
+        </div>
+
+
+        <!-- 電話番号 -->
+
+        <div class="kyc-form-group">
+
+          <label for="phone">
+            電話番号
+          </label>
+
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            placeholder="090-1234-5678"
+            required
+          >
+
+        </div>
+
+
+        <!-- 本人確認書類 -->
+
+        <div class="kyc-form-group">
+
+          <label for="documentType">
+            本人確認書類
+          </label>
+
+          <select
+            id="documentType"
+            name="documentType"
+            required
+          >
+
+            <option value="">
+              選択してください
+            </option>
+
+            <option value="drivers_license">
+              運転免許証
+            </option>
+
+            <option value="my_number_card">
+              マイナンバーカード
+            </option>
+
+            <option value="passport">
+              パスポート
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <!-- 表面 -->
+
+        <div class="kyc-form-group">
+
+          <label for="documentFront">
+            本人確認書類（表面）
+          </label>
+
+          <input
+            type="file"
+            id="documentFront"
+            name="documentFront"
+            accept="image/*"
+            required
+          >
+
+          <p class="kyc-note">
+            顔写真や記載内容が鮮明に確認できる画像をアップロードしてください。
+          </p>
+
+        </div>
+
+
+        <!-- 裏面 -->
+
+        <div class="kyc-form-group">
+
+          <label for="documentBack">
+            本人確認書類（裏面）
+          </label>
+
+          <input
+            type="file"
+            id="documentBack"
+            name="documentBack"
+            accept="image/*"
+          >
+
+          <p class="kyc-note">
+            裏面がある書類の場合のみアップロードしてください。
+          </p>
+
+        </div>
+
+
+        <!-- 同意 -->
+
+        <label class="kyc-check">
+
+          <input
+            type="checkbox"
+            id="kycAgree"
+            required
+          >
+
+          <span>
+            入力内容が正しいことを確認しました。
+          </span>
+
+        </label>
+
+
+        <button
+          type="submit"
+          class="kyc-submit-button"
+        >
+          本人確認を申請する
+        </button>
+
+      </form>
+
+    </div>
+
+  </section>
+
+</main>
+
+
+<script src="js/script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+</body>
+
+</html>
