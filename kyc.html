@@ -390,15 +390,25 @@
 
 <script src="js/script.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script
+script>
 
-  src="js/kyc.js?v=4"
+<script>
 
-  onload="alert('kyc.jsの読み込み成功')"
+  window.addEventListener("error", function(event) {
 
-  onerror="alert('kyc.jsの読み込み失敗')"
+    alert(
 
-></script>
+      "JSエラー：" + event.message +
+
+      "\n行番号：" + event.lineno
+
+    );
+
+  });
+
+</script>
+
+<script src="js/kyc.js?v=5"></script>
 
 </body>
 
