@@ -346,4 +346,3 @@ if (kycForm && kycSubmitButton) {
 
 }
 
-alert("kyc.js 読み込み成功");
