@@ -79,6 +79,9 @@ async function checkLogin() {
 
   }
 
+  // KYC情報取得
+
+  loadKycStatus(user.id);
 
   // レンディング情報取得
 
@@ -89,6 +92,135 @@ async function checkLogin() {
 
 checkLogin();
 
+
+// =========================
+// KYCステータス取得
+// =========================
+
+async function loadKycStatus(userId) {
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .from("kyc_profiles")
+      .select("status")
+      .eq("user_id", userId)
+      .order("created_at", {
+        ascending: false
+      })
+      .limit(1);
+
+
+  if (error) {
+
+    console.error(error);
+
+    return;
+  }
+
+
+  const kycStatus =
+    document.getElementById(
+      "kycStatus"
+    );
+
+  const kycButton =
+    document.getElementById(
+      "kycButton"
+    );
+
+
+  if (!kycStatus || !kycButton) {
+    return;
+  }
+
+
+  // 未提出
+
+  if (!data || data.length === 0) {
+
+    kycStatus.textContent =
+      "未提出";
+
+    kycButton.textContent =
+      "本人確認を進める";
+
+    kycButton.href =
+      "kyc.html";
+
+    kycButton.classList.remove(
+      "disabled"
+    );
+
+    return;
+  }
+
+
+  const status =
+    data[0].status;
+
+
+  kycStatus.textContent =
+    status;
+
+
+  // 審査中
+
+  if (status === "審査中") {
+
+    kycButton.textContent =
+      "審査中";
+
+    kycButton.removeAttribute(
+      "href"
+    );
+
+    kycButton.classList.add(
+      "disabled"
+    );
+
+    return;
+  }
+
+
+  // 本人確認済み
+
+  if (status === "本人確認済み") {
+
+    kycButton.textContent =
+      "本人確認済み";
+
+    kycButton.removeAttribute(
+      "href"
+    );
+
+    kycButton.classList.add(
+      "disabled"
+    );
+
+    return;
+  }
+
+
+  // 再提出
+
+  if (status === "再提出") {
+
+    kycButton.textContent =
+      "再提出する";
+
+    kycButton.href =
+      "kyc.html";
+
+    kycButton.classList.remove(
+      "disabled"
+    );
+
+  }
+
+}
 
 // =========================
 // レンディング情報取得
