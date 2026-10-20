@@ -20,6 +20,7 @@ let currentHistoryPage = 1;
 
 const historyPerPage = 1;
 
+let kycApproved = false;
 
 // =========================
 // ログイン確認
@@ -137,9 +138,13 @@ async function loadKycStatus(userId) {
   }
 
 
+  // =========================
   // 未提出
+  // =========================
 
   if (!data || data.length === 0) {
+
+    kycApproved = false;
 
     kycStatus.textContent =
       "未提出";
@@ -154,6 +159,8 @@ async function loadKycStatus(userId) {
       "disabled"
     );
 
+    updateLendingButton();
+
     return;
   }
 
@@ -166,9 +173,13 @@ async function loadKycStatus(userId) {
     status;
 
 
+  // =========================
   // 審査中
+  // =========================
 
   if (status === "審査中") {
+
+    kycApproved = false;
 
     kycButton.textContent =
       "審査中";
@@ -181,13 +192,19 @@ async function loadKycStatus(userId) {
       "disabled"
     );
 
+    updateLendingButton();
+
     return;
   }
 
 
+  // =========================
   // 本人確認済み
+  // =========================
 
   if (status === "本人確認済み") {
+
+    kycApproved = true;
 
     kycButton.textContent =
       "本人確認済み";
@@ -200,13 +217,19 @@ async function loadKycStatus(userId) {
       "disabled"
     );
 
+    updateLendingButton();
+
     return;
   }
 
 
+  // =========================
   // 再提出
+  // =========================
 
   if (status === "再提出") {
+
+    kycApproved = false;
 
     kycButton.textContent =
       "再提出する";
@@ -217,6 +240,8 @@ async function loadKycStatus(userId) {
     kycButton.classList.remove(
       "disabled"
     );
+
+    updateLendingButton();
 
   }
 
@@ -859,7 +884,8 @@ function updateLendingButton() {
     !(
       selectedPlan &&
       selectedAsset &&
-      amountValid
+      amountValid &&
+      kycApproved
     );
 
 }
