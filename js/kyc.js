@@ -8,7 +8,9 @@ const birthDate =
 const birthDateText =
   document.getElementById("birthDateText");
 
-birthDate.addEventListener("change", () => {
+function updateBirthDate() {
+
+  if (!birthDate || !birthDateText) return;
 
   if (!birthDate.value) {
     birthDateText.textContent = "生年月日を選択";
@@ -20,5 +22,13 @@ birthDate.addEventListener("change", () => {
 
   birthDateText.textContent =
     `${year}/${month}/${day}`;
+}
 
-});
+// 日付を変更したとき
+birthDate.addEventListener("change", updateBirthDate);
+
+// 入力状態が変わったとき
+birthDate.addEventListener("input", updateBirthDate);
+
+// ページ読み込み時
+updateBirthDate();
