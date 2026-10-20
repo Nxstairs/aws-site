@@ -10,8 +10,8 @@ const SUPABASE_KEY =
   "sb_publishable_N6sa5ldpyoxtllYu4YkPgA__uvO8aEr";
 
 const kycSupabase = supabase.createClient(
-  KYC_SUPABASE_URL,
-  KYC_SUPABASE_KEY
+  SUPABASE_URL,
+  SUPABASE_KEY
 );
 
 
