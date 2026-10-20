@@ -3,8 +3,11 @@
 // Supabase設定
 // =========================
 
-const KYC_SUPABASE_URL = "ここにSupabase URL";
-const KYC_SUPABASE_KEY = "ここにPublishable Key";
+const SUPABASE_URL =
+  "https://rqtpqlknlrznxfbzeuja.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_N6sa5ldpyoxtllYu4YkPgA__uvO8aEr";
 
 const kycSupabase = supabase.createClient(
   KYC_SUPABASE_URL,
