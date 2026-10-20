@@ -32,3 +32,36 @@ birthDate.addEventListener("input", updateBirthDate);
 
 // ページ読み込み時
 updateBirthDate();
+
+// =========================
+// 本人確認申請ボタン
+// =========================
+
+const kycForm =
+  document.getElementById("kycForm");
+
+const kycSubmitButton =
+  document.getElementById("kycSubmitButton");
+
+function updateKycSubmitButton() {
+
+  if (!kycForm || !kycSubmitButton) return;
+
+  kycSubmitButton.disabled =
+    !kycForm.checkValidity();
+}
+
+if (kycForm && kycSubmitButton) {
+
+  kycForm.addEventListener(
+    "input",
+    updateKycSubmitButton
+  );
+
+  kycForm.addEventListener(
+    "change",
+    updateKycSubmitButton
+  );
+
+  updateKycSubmitButton();
+}
