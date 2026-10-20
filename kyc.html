@@ -129,22 +129,30 @@
         </div>
 
 
-        <!-- 生年月日 -->
+<!-- 生年月日 -->
 
-        <div class="kyc-form-group">
+<div class="kyc-form-group">
 
-          <label for="birthDate">
-            生年月日
-          </label>
+  <label for="birthDate">
+    生年月日
+  </label>
 
-          <input
-            type="date"
-            id="birthDate"
-            name="birthDate"
-            required
-          >
+  <div class="kyc-date-box">
 
-        </div>
+    <span id="birthDateText">
+      生年月日を選択
+    </span>
+
+    <input
+      type="date"
+      id="birthDate"
+      name="birthDate"
+      required
+    >
+
+  </div>
+
+</div>
 
 
         <!-- 郵便番号 -->
@@ -319,6 +327,7 @@
 
 <script src="js/script.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/kyc.js"></script>
 
 </body>
 
