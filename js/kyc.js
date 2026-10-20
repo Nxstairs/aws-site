@@ -282,7 +282,7 @@ async function submitKyc(event) {
           document_front_path: frontPath,
           document_back_path: backPath,
 
-          status: "pending"
+          status: "審査中"
 
         });
 
