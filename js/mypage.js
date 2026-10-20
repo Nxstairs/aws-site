@@ -880,6 +880,13 @@ function updateLendingButton() {
     return;
   }
 
+
+  const lendingKycMessage =
+    document.getElementById(
+      "lendingKycMessage"
+    );
+
+
   lendingButton.disabled =
     !(
       selectedPlan &&
@@ -887,6 +894,23 @@ function updateLendingButton() {
       amountValid &&
       kycApproved
     );
+
+
+  if (lendingKycMessage) {
+
+    if (kycApproved) {
+
+      lendingKycMessage.style.display =
+        "none";
+
+    } else {
+
+      lendingKycMessage.style.display =
+        "block";
+
+    }
+
+  }
 
 }
 
