@@ -1,5 +1,5 @@
-// =========================
-// ¶”NŒ“ú‚Ì•\¦
+ï»¿// =========================
+// ç”Ÿå¹´æœˆæ—¥ã®è¡¨ç¤º
 // =========================
 
 const birthDate =
@@ -13,7 +13,7 @@ function updateBirthDate() {
   if (!birthDate || !birthDateText) return;
 
   if (!birthDate.value) {
-    birthDateText.textContent = "¶”NŒ“ú‚ğ‘I‘ğ";
+    birthDateText.textContent = "ç”Ÿå¹´æœˆæ—¥ã‚’é¸æŠ";
     return;
   }
 
@@ -24,11 +24,11 @@ function updateBirthDate() {
     `${year}/${month}/${day}`;
 }
 
-// “ú•t‚ğ•ÏX‚µ‚½‚Æ‚«
+// æ—¥ä»˜ã‚’å¤‰æ›´ã—ãŸã¨ã
 birthDate.addEventListener("change", updateBirthDate);
 
-// “ü—Íó‘Ô‚ª•Ï‚í‚Á‚½‚Æ‚«
+// å…¥åŠ›çŠ¶æ…‹ãŒå¤‰ã‚ã£ãŸã¨ã
 birthDate.addEventListener("input", updateBirthDate);
 
-// ƒy[ƒW“Ç‚İ‚İ
+// ãƒšãƒ¼ã‚¸èª­ã¿è¾¼ã¿æ™‚
 updateBirthDate();
