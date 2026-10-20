@@ -55,7 +55,6 @@ function updateBirthDate() {
   birthDateText.textContent =
     `${year}/${month}/${day}`;
 
-alert("選択された日付：" + birthDate.value);
 }
 
 if (birthDate && birthDateText) {
@@ -346,3 +345,5 @@ if (kycForm && kycSubmitButton) {
   updateKycSubmitButton();
 
 }
+
+alert("kyc.js 読み込み成功");
