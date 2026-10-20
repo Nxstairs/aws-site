@@ -104,7 +104,7 @@ async function loadKycStatus(userId) {
     error
   } =
     await supabaseClient
-      .from("kyc_profiles")
+      .from("kyc_applications")
       .select("status")
       .eq("user_id", userId)
       .order("created_at", {
